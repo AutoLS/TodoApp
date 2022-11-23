@@ -14,7 +14,7 @@ const TodoForm = () => {
 
         const response = await fetch('http://autols.ca:4000/api/todos', {
             method: 'POST',
-            mode: 'no-cors',
+            mode: 'cors',
             body: JSON.stringify(todo),
             headers: {
                 'Content-Type': 'application/json'

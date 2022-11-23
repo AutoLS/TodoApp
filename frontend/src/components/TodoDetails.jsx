@@ -13,7 +13,7 @@ const TodoDetails = ({ todo }) => {
     const handleClick = async () => {
         const response = await fetch("http://autols.ca:4000/api/todos/" + todo._id, {
             method: 'DELETE',
-            mode: 'no-cors'
+            mode: 'cors'
         });
 
         const json = await response.json();
@@ -36,7 +36,7 @@ const TodoDetails = ({ todo }) => {
 
         const response = await fetch("http://autols.ca:4000/api/todos/" + todo._id, {
             method: 'PATCH',
-            mode: 'no-cors',
+            mode: 'cors',
             body: JSON.stringify(updatedTodo),
             headers: {
                 'Content-type': 'application/json'
