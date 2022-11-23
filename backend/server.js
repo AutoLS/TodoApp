@@ -25,8 +25,8 @@ app.use('/api/todos', todoRoutes);
 
 //connect to db
 mongoose.connect(process.env.MONGO_URI).then(() => {
-    https.createServer(options, app).listen(443, () => {
-        console.log('connected to db and listening on port 443');
+    https.createServer(options, app).listen(process.env.PORT, () => {
+        console.log('connected to db and listening on port ', process.env.PORT);
     })
 }).catch((error) => {
     console.log(error);
