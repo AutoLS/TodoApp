@@ -12,7 +12,7 @@ function App() {
         <div className="max-w-screen-2xl p-5 mx-auto font-bold">
           <Routes>
             <Route
-              path="/"
+              path="/apps/TodoReact"
               element={<Home />}
             />
           </Routes>
