@@ -5,10 +5,11 @@ const todoRoutes = require('./routes/todos');
 const https = require('https');
 var fs = require('fs');
 
-const startup_arg = process.argv[0];
-console.log(startup_arg);
+const startup_args = process.argv.slice(2);
+const deploy_arg = startup_args[0];
+console.log(deploy_arg);
 
-if(startup_arg === 'deploy')
+if(deploy_arg === 'deploy')
 {
     const options = {
         key: fs.readFileSync('./privkey.pem'),
@@ -32,7 +33,7 @@ app.use('/api/todos', todoRoutes);
 
 //connect to db
 mongoose.connect(process.env.MONGO_URI).then(() => {
-    if(startup_arg === 'deploy')
+    if(deploy_arg === 'deploy')
     {
         https.createServer(options, app).listen(process.env.PORT, () => {
             console.log('Created deployment server, connected to db and listening on port', process.env.PORT);
