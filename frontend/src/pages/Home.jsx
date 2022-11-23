@@ -4,13 +4,19 @@ import TodoDetails from '../components/TodoDetails';
 import TodoForm from "../components/TodoForm";
 import { useTodosContext } from "../hooks/useTodosContext";
 
+var protocol = window.location.protocol;
+var hostname = window.location.hostname;
+var port = '4000';
+let fetchURL = protocol + '//' + hostname + ':' + port;
+console.log(fetchURL);
+
 const Home = () => {
 
     const {todos, dispatch} = useTodosContext()
     
     useEffect(() => {
         const fetchTodos = async () =>{
-            const response = await fetch('http://autols.ca:4000/api/todos', {
+            const response = await fetch(fetchURL + '/api/todos', {
                 method: 'GET',
                 mode: 'cors',
             });

@@ -4,6 +4,10 @@ import { faTrash,  faTrashCanArrowUp} from '@fortawesome/free-solid-svg-icons';
 import { useState } from "react";
 import formatDistanceToNow from 'date-fns/formatDistanceToNow';
 
+var protocol = window.location.protocol;
+var hostname = window.location.hostname;
+var port = '4000';
+let fetchURL = protocol + '//' + hostname + ':' + port;
 
 const TodoDetails = ({ todo }) => {
 
@@ -11,7 +15,7 @@ const TodoDetails = ({ todo }) => {
     const [deleteIcon, setDeleteIcon] = useState(<FontAwesomeIcon icon={faTrash} />);
 
     const handleClick = async () => {
-        const response = await fetch("http://autols.ca:4000/api/todos/" + todo._id, {
+        const response = await fetch(fetchURL + '/api/todos/' + todo._id, {
             method: 'DELETE',
             mode: 'cors'
         });
@@ -34,7 +38,7 @@ const TodoDetails = ({ todo }) => {
     const handleCheckbox = async (e) => {
         const updatedTodo = {title: todo.title, description: todo.description, completed: e.currentTarget.checked};
 
-        const response = await fetch("http://autols.ca:4000/api/todos/" + todo._id, {
+        const response = await fetch(fetchURL + '/api/todos/' + todo._id, {
             method: 'PATCH',
             mode: 'cors',
             body: JSON.stringify(updatedTodo),

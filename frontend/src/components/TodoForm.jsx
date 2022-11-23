@@ -1,6 +1,11 @@
 import { useTodosContext } from "../hooks/useTodosContext";
 const { useState } = require("react");
 
+var protocol = window.location.protocol;
+var hostname = window.location.hostname;
+var port = '4000';
+let fetchURL = protocol + '//' + hostname + ':' + port;
+
 const TodoForm = () => {
     const {dispatch} = useTodosContext()
     const [title, setTitle] = useState('');
@@ -12,7 +17,7 @@ const TodoForm = () => {
 
         const todo = {title, description, completed: false};
 
-        const response = await fetch('http://autols.ca:4000/api/todos', {
+        const response = await fetch(fetchURL + '/api/todos', {
             method: 'POST',
             mode: 'cors',
             body: JSON.stringify(todo),
