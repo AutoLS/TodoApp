@@ -10,7 +10,7 @@ const Home = () => {
     
     useEffect(() => {
         const fetchTodos = async () =>{
-            const response = await fetch('/api/todos', {
+            const response = await fetch(':4000/api/todos', {
                 method: 'GET',
                 mode: 'cors',
             });

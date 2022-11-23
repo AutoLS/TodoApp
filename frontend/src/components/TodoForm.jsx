@@ -12,7 +12,7 @@ const TodoForm = () => {
 
         const todo = {title, description, completed: false};
 
-        const response = await fetch('/api/todos', {
+        const response = await fetch(':4000/api/todos', {
             method: 'POST',
             mode: 'cors',
             body: JSON.stringify(todo),
