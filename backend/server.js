@@ -9,14 +9,6 @@ const startup_args = process.argv.slice(2);
 const deploy_arg = startup_args[0];
 console.log(deploy_arg);
 
-if(deploy_arg === 'deploy')
-{
-    const options = {
-        key: fs.readFileSync('./privkey.pem'),
-        cert: fs.readFileSync('./fullchain.pem')
-    };
-}
-
 const app = express();
 
 app.use(express.json());
@@ -35,6 +27,11 @@ app.use('/api/todos', todoRoutes);
 mongoose.connect(process.env.MONGO_URI).then(() => {
     if(deploy_arg === 'deploy')
     {
+        const options = {
+            key: fs.readFileSync('./privkey.pem'),
+            cert: fs.readFileSync('./fullchain.pem')
+        };
+        
         https.createServer(options, app).listen(process.env.PORT, () => {
             console.log('Created deployment server, connected to db and listening on port', process.env.PORT);
         });
