@@ -11,7 +11,7 @@ const TodoDetails = ({ todo }) => {
     const [deleteIcon, setDeleteIcon] = useState(<FontAwesomeIcon icon={faTrash} />);
 
     const handleClick = async () => {
-        const response = await fetch(":4000/api/todos/" + todo._id, {
+        const response = await fetch("http://autols.ca:4000/api/todos/" + todo._id, {
             method: 'DELETE',
             mode: 'cors'
         });
@@ -34,7 +34,7 @@ const TodoDetails = ({ todo }) => {
     const handleCheckbox = async (e) => {
         const updatedTodo = {title: todo.title, description: todo.description, completed: e.currentTarget.checked};
 
-        const response = await fetch(":4000/api/todos/" + todo._id, {
+        const response = await fetch("http://autols.ca:4000/api/todos/" + todo._id, {
             method: 'PATCH',
             mode: 'cors',
             body: JSON.stringify(updatedTodo),
