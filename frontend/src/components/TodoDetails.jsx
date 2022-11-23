@@ -12,7 +12,8 @@ const TodoDetails = ({ todo }) => {
 
     const handleClick = async () => {
         const response = await fetch("/api/todos/" + todo._id, {
-            method: 'DELETE'
+            method: 'DELETE',
+            mode: 'cors'
         });
 
         const json = await response.json();
@@ -35,6 +36,7 @@ const TodoDetails = ({ todo }) => {
 
         const response = await fetch("/api/todos/" + todo._id, {
             method: 'PATCH',
+            mode: 'cors',
             body: JSON.stringify(updatedTodo),
             headers: {
                 'Content-type': 'application/json'

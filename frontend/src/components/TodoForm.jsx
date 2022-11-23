@@ -14,6 +14,7 @@ const TodoForm = () => {
 
         const response = await fetch('/api/todos', {
             method: 'POST',
+            mode: 'cors',
             body: JSON.stringify(todo),
             headers: {
                 'Content-Type': 'application/json'
