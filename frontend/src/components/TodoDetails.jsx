@@ -36,7 +36,7 @@ const TodoDetails = ({ todo }) => {
 
         const response = await fetch("http://autols.ca:4000/api/todos/" + todo._id, {
             method: 'PATCH',
-            mode: 'cors',
+            mode: 'no-cors',
             body: JSON.stringify(updatedTodo),
             headers: {
                 'Content-type': 'application/json'
