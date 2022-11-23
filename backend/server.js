@@ -2,8 +2,8 @@ require('dotenv').config();
 const express = require('express');
 const mongoose = require('mongoose');
 const todoRoutes = require('./routes/todos');
-import * as https from 'https';
-import * as fs from 'fs';
+const https = require('https');
+var fs = require('fs');
 
 const options = {
     key: fs.readFileSync('./privkey.pem'),
