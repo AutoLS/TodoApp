@@ -12,7 +12,7 @@ const Home = () => {
         const fetchTodos = async () =>{
             const response = await fetch('http://autols.ca:4000/api/todos', {
                 method: 'GET',
-                mode: 'cors',
+                mode: 'no-cors',
             });
             
             const json = await response.json();
