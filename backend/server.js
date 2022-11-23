@@ -34,7 +34,7 @@ mongoose.connect(process.env.MONGO_URI).then(() => {
     if(startup_arg === 'deploy')
     {
         https.createServer(options, app).listen(process.env.PORT, () => {
-            console.log('connected to db and listening on port', process.env.PORT);
+            console.log('Created deployment server, connected to db and listening on port', process.env.PORT);
         });
     }
     else
