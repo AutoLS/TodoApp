@@ -6,6 +6,7 @@ const https = require('https');
 var fs = require('fs');
 
 const startup_arg = process.argv[0];
+console.log(startup_arg);
 
 if(startup_arg === 'deploy')
 {
