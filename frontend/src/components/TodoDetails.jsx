@@ -1,4 +1,5 @@
 import { useTodosContext } from "../hooks/useTodosContext";
+import { useAuthContext } from "../hooks/useAuthContext";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faTrash,  faTrashCanArrowUp} from '@fortawesome/free-solid-svg-icons';
 import { useState } from "react";
@@ -13,11 +14,18 @@ const TodoDetails = ({ todo }) => {
 
     const { dispatch } = useTodosContext();
     const [deleteIcon, setDeleteIcon] = useState(<FontAwesomeIcon icon={faTrash} />);
+    const {user} = useAuthContext();
 
     const handleClick = async () => {
+
+        if(!user) return;
+
         const response = await fetch(fetchURL + '/api/todos/' + todo._id, {
             method: 'DELETE',
-            mode: 'cors'
+            mode: 'cors',
+            headers: {
+                'Authorization': `Bearer ${user.token}`
+            }
         });
 
         const json = await response.json();
@@ -38,12 +46,15 @@ const TodoDetails = ({ todo }) => {
     const handleCheckbox = async (e) => {
         const updatedTodo = {title: todo.title, description: todo.description, completed: e.currentTarget.checked};
 
+        if(!user) return;
+
         const response = await fetch(fetchURL + '/api/todos/' + todo._id, {
             method: 'PATCH',
             mode: 'cors',
             body: JSON.stringify(updatedTodo),
             headers: {
-                'Content-type': 'application/json'
+                'Content-type': 'application/json',
+                'Authorization': `Bearer ${user.token}`
             }
         });
 

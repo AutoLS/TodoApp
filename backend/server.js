@@ -2,26 +2,22 @@ require('dotenv').config();
 const express = require('express');
 const mongoose = require('mongoose');
 const todoRoutes = require('./routes/todos');
+const userRoutes = require('./routes/users');
 const https = require('https');
+const cors = require('cors');
 var fs = require('fs');
 
 const startup_args = process.argv.slice(2);
 const deploy_arg = startup_args[0];
-console.log(deploy_arg);
 
 const app = express();
 
 app.use(express.json());
-app.use((req, res, next) => {
-    res.setHeader('Access-Control-Allow-Origin', '*');
-    res.setHeader('Access-Control-Allow-Methods', 'GET,POST,PUT,DELETE,OPTIONS,PATCH');
-    res.setHeader('Access-Control-Allow-Headers', 'Content-Type, Access-Control-Allow-Headers');
-    console.log(req.path, req.method);
-    next();
-});
+app.use(cors());
 
 //routes
 app.use('/api/todos', todoRoutes);
+app.use('/api/users', userRoutes);
 
 //connect to db
 mongoose.connect(process.env.MONGO_URI).then(() => {
@@ -31,7 +27,7 @@ mongoose.connect(process.env.MONGO_URI).then(() => {
             key: fs.readFileSync('./privkey.pem'),
             cert: fs.readFileSync('./fullchain.pem')
         };
-        
+
         https.createServer(options, app).listen(process.env.PORT, () => {
             console.log('Created deployment server, connected to db and listening on port', process.env.PORT);
         });

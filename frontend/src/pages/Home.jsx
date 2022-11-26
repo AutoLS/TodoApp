@@ -3,6 +3,7 @@ import { useEffect } from "react";
 import TodoDetails from '../components/TodoDetails';
 import TodoForm from "../components/TodoForm";
 import { useTodosContext } from "../hooks/useTodosContext";
+import { useAuthContext } from "../hooks/useAuthContext";
 
 var protocol = window.location.protocol;
 var hostname = window.location.hostname;
@@ -13,12 +14,15 @@ console.log(fetchURL);
 const Home = () => {
 
     const {todos, dispatch} = useTodosContext()
+    const {user} = useAuthContext();
     
     useEffect(() => {
         const fetchTodos = async () =>{
             const response = await fetch(fetchURL + '/api/todos', {
                 method: 'GET',
-                mode: 'cors',
+                headers: {
+                    'Authorization': `Bearer ${user.token}`
+                }
             });
             
             const json = await response.json();
@@ -28,9 +32,9 @@ const Home = () => {
             }
         }
 
-        fetchTodos();
+        if(user) fetchTodos();
 
-    }, [dispatch]);
+    }, [dispatch, user]);
     
     return(
         <div className="grid grid-cols-3 gap-24">

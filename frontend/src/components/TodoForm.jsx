@@ -1,4 +1,6 @@
 import { useTodosContext } from "../hooks/useTodosContext";
+import { useAuthContext } from "../hooks/useAuthContext";
+import ErrorMessage from "./ErrorMessage";
 const { useState } = require("react");
 
 var protocol = window.location.protocol;
@@ -11,9 +13,15 @@ const TodoForm = () => {
     const [title, setTitle] = useState('');
     const [description, setDescription] = useState('');
     const [error, setError] = useState(null);
+    const {user} = useAuthContext();
     
     const handleSubmit = async (e) => {
         e.preventDefault();
+
+        if(!user) {
+            setError('You must be logged in');
+            return;
+        }
 
         const todo = {title, description, completed: false};
 
@@ -22,7 +30,8 @@ const TodoForm = () => {
             mode: 'cors',
             body: JSON.stringify(todo),
             headers: {
-                'Content-Type': 'application/json'
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${user.token}`
             }
         });
 
@@ -51,7 +60,7 @@ const TodoForm = () => {
             <textarea name="description" form="addTodoForm" onChange={(e) => setDescription(e.target.value)} value={description} className="p-2.5 mt-2.5 mb-5 w-full rounded border-gray-400 box-border block"/>
 
             <button className="bg-blue-800 text-white rounded cursor-pointer p-2.5">Add Todo</button>
-            {error && <div className="p-2.5 bg-red-50 text-red-700 rounded border border-red-700 my-2.5">{error}</div>}
+            {error && <ErrorMessage error={error}/>}
         </form>
     );
 };
