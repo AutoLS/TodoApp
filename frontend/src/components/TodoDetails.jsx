@@ -5,11 +5,6 @@ import { faTrash,  faTrashCanArrowUp} from '@fortawesome/free-solid-svg-icons';
 import { useState } from "react";
 import formatDistanceToNow from 'date-fns/formatDistanceToNow';
 
-var protocol = window.location.protocol;
-var hostname = window.location.hostname;
-var port = '4000';
-let fetchURL = protocol + '//' + hostname + ':' + port;
-
 const TodoDetails = ({ todo }) => {
 
     const { dispatch } = useTodosContext();
@@ -20,7 +15,7 @@ const TodoDetails = ({ todo }) => {
 
         if(!user) return;
 
-        const response = await fetch(fetchURL + '/api/todos/' + todo._id, {
+        const response = await fetch('/api/todos/' + todo._id, {
             method: 'DELETE',
             mode: 'cors',
             headers: {
@@ -48,7 +43,7 @@ const TodoDetails = ({ todo }) => {
 
         if(!user) return;
 
-        const response = await fetch(fetchURL + '/api/todos/' + todo._id, {
+        const response = await fetch('/api/todos/' + todo._id, {
             method: 'PATCH',
             mode: 'cors',
             body: JSON.stringify(updatedTodo),

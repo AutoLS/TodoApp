@@ -3,11 +3,6 @@ import { useAuthContext } from "../hooks/useAuthContext";
 import ErrorMessage from "./ErrorMessage";
 const { useState } = require("react");
 
-var protocol = window.location.protocol;
-var hostname = window.location.hostname;
-var port = '4000';
-let fetchURL = protocol + '//' + hostname + ':' + port;
-
 const TodoForm = () => {
     const {dispatch} = useTodosContext()
     const [title, setTitle] = useState('');
@@ -25,7 +20,7 @@ const TodoForm = () => {
 
         const todo = {title, description, completed: false};
 
-        const response = await fetch(fetchURL + '/api/todos', {
+        const response = await fetch('/api/todos', {
             method: 'POST',
             mode: 'cors',
             body: JSON.stringify(todo),

@@ -5,12 +5,6 @@ import TodoForm from "../components/TodoForm";
 import { useTodosContext } from "../hooks/useTodosContext";
 import { useAuthContext } from "../hooks/useAuthContext";
 
-var protocol = window.location.protocol;
-var hostname = window.location.hostname;
-var port = '4000';
-let fetchURL = protocol + '//' + hostname + ':' + port;
-console.log(fetchURL);
-
 const Home = () => {
 
     const {todos, dispatch} = useTodosContext()
@@ -18,7 +12,7 @@ const Home = () => {
     
     useEffect(() => {
         const fetchTodos = async () =>{
-            const response = await fetch(fetchURL + '/api/todos', {
+            const response = await fetch('/api/todos', {
                 method: 'GET',
                 headers: {
                     'Authorization': `Bearer ${user.token}`
